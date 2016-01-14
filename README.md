@@ -58,12 +58,14 @@ You will store these objects in memory for the time being. Meaning that if the *
 
 `DELETE /buzzword`: Deletes a buzz word from the collection.
 
+## Score?
+For now, your server only handles one user's game and one user's score total. It's up to you on how you keep track of the user's score.
 
 ## Middleware to use
 [Body-Parser](https://github.com/expressjs/body-parser) - Use this module to help parse the `data` coming from a request. Focus on the **[urlencodedoptions](https://github.com/expressjs/body-parser#bodyparserurlencodedoptions)** section of the README, use the `extended: true` option. Take some time to scan through the documentation. What is `body-parser` module doing for us? Is this module doing something we previously had to do manually?
 
 ## Getting Started
-1. Create your own directory for this project, name it `express-todo-api`.
+1. Fork and clone this repo.
 1. You'll be using `git` and `npm` so be sure to **initialize** those tools before you use them.
 1. Install the packages you need
 1. Use **Postman** to test your routes.
