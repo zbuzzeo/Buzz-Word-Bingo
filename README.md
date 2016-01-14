@@ -21,7 +21,7 @@ This is how your objects should look like after receiving a `POST` to the uri `/
 ```javascript
 {
   buzzWord: String,
-  score: Number
+  points: Number
   heard: false
 }
 ```
