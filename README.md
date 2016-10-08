@@ -34,9 +34,9 @@ You will store these objects in memory for the time being. Meaning that if the *
 |---|---|---|---|
 | `GET /` | empty | render HTML `index.html` | serves the `index.html` |
 | `GET /buzzwords` | empty | `{ "buzzWords": [...] }` A JSON response containing an array of current buzz words | Retrieves all buzzwords |
-| `POST /buzzword` | `{ "buzzWord": String, "points": Number }` | `{ "success": true }` | Creates a new buzzword object. Returns `true` if successful else `false`|
-| `PUT /buzzword` | `{ "buzzWord": String, "heard": Bool }` |  `{ "success": true, newScore: Number }` | Updates a buzzword. Returns `true` and the new score if successful otherwise returns just `false` |
-| `DELETE /buzzword` | `{ "buzzWord": String }` | `{ "success": true }` | Delete a buzzword. Returns `true` if successful else `false` |
+| `POST /buzzwords` | `{ "buzzWord": String, "points": Number }` | `{ "success": true }` | Creates a new buzzword object. Returns `true` if successful else `false`|
+| `PUT /buzzwords` | `{ "buzzWord": String, "heard": Bool }` |  `{ "success": true, newScore: Number }` | Updates a buzzword. Returns `true` and the new score if successful otherwise returns just `false` |
+| `DELETE /buzzwords` | `{ "buzzWord": String }` | `{ "success": true }` | Delete a buzzword. Returns `true` if successful else `false` |
 | `POST /reset` | `{ "reset": true }` | `{ "success": true }` | Resets the server. All buzzwords are removed and scores reset to `0` |
 
 ## Routes detailed
