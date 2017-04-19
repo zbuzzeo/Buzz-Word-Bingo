@@ -70,4 +70,3 @@ For now, your server only handles one user's game and one user's score total. It
 1. Install the packages you need
 1. Use **Postman** to test your routes.
 1. Remember to commit often!
-# Buzz-Word-Bingo
