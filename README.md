@@ -1,12 +1,11 @@
 # Buzz Word Bingo
-**About the game**
+**A Buzz Word Tracker**
 
-Before a meeting the players are asked to enter words with point values. A player can enter a total of **5 words at most**. Once a meeting starts if a word that the player previously entered is heard during a meeting that player can mark that word and score the points increasing their score. Each time the player scores a new word the total increases by the point value.
+You're being asked to write a buzzword tracker that can keep track of buzzwords, the amount of points for a buzzword being spoken aloud, and the total amount of points overall. This system should keep track of **at most 5 buzzwords**. The intention is to load the system with at most 5 buzzwords and if any of those 5 buzzwords are spoken during a conversation, the matching amount of points is added to a "total point count" managed by the system.
 
 # Welcome to Team Buzz™
-Our game has been getting a lot of traction and we need to rebuild the API server with NodeJS
-to handle all the connections, we need you to create the server using **ExpressJS**. Our CTO will provide you with
-the specs below.
+Our system has been getting a lot of traction and we need to rebuild the API server with NodeJS
+to handle all the connections, we need you to create the server using **ExpressJS**. Our CTO will provide you with the specs below.
 
 **At this time:**
 - you will not build the front-end.
@@ -15,8 +14,8 @@ the specs below.
 ## The Specs
 We like RESTful architechure. We like CRUD. As always, data will be sent to the server as `x-www-form-urlencoded`.
 
-### Buzz word object
-This is how your objects should look like after receiving a `POST` to the uri `/buzzword`
+### Creating Buzzwords
+This is how your buzzword objects should look like after receiving a `POST` to the uri `/buzzword`
 
 ```javascript
 {
@@ -35,9 +34,9 @@ You will store these objects in memory for the time being. Meaning that if the *
 | `GET /` | empty | render HTML `index.html` | serves the `index.html` |
 | `GET /buzzwords` | empty | `{ "buzzWords": [...] }` A JSON response containing an array of current buzz words | Retrieves all buzzwords |
 | `POST /buzzword` | `{ "buzzWord": String, "points": Number }` | `{ "success": true }` | Creates a new buzzword object. Returns `true` if successful else `false`|
-| `PUT /buzzword` | `{ "buzzWord": String, "heard": Bool }` |  `{ "success": true, newScore: Number }` | Updates a buzzword. Returns `true` and the new score if successful otherwise returns just `false` |
+| `PUT /buzzword` | `{ "buzzWord": String, "heard": Bool }` |  `{ "success": true, newScore: Number }` | Updates a buzzword's heard value. This also marks that a buzzword has been heard and should update the total score. Returns `true` and the new total score if successful otherwise returns just `false` |
 | `DELETE /buzzword` | `{ "buzzWord": String }` | `{ "success": true }` | Delete a buzzword. Returns `true` if successful else `false` |
-| `POST /reset` | `{ "reset": true }` | `{ "success": true }` | Resets the server. All buzzwords are removed and scores reset to `0` |
+| `POST /reset` | `{ "reset": true }` | `{ "success": true }` | Resets the server. All buzzwords are removed and total scores reset to `0` |
 
 ## Routes detailed
 `GET /`: Serves the static file `index.html` which should be located in your `public/` directory. For now just have a stub HTML file.
@@ -50,16 +49,16 @@ You will store these objects in memory for the time being. Meaning that if the *
   Example:
   if `{ "buzzword": "Agile is amazing", "score": 1000 }` is sent to this route then the server will create a new [buzz word object](https://github.com/expressjs/body-parser#bodyparserurlencodedoptions) and add it to a collection.
 
-`PUT /buzzword`:  Updates a buzz word's `heard` property. The body **should** contain these keys:
+`PUT /buzzword`:  Updates a buzz word's `heard` property. This also marks that the buzzword has been "heard" in the conversation. Therefore, the total score should be incremented with the score value attached to the heard buzzword. The body **should** contain these keys:
   - `buzzWord` which is the buzz word to modify.
   - `heard` Changes the value stored.
   Example:
-  if `{ "buzzWord": "Social-Mobile", "heard": true }` is sent to this route then the server will find the buzz word "Social-Mobile" and change it's `heard` property to `true`.
+  if `{ "buzzWord": "Social-Mobile", "heard": true }` is sent to this route then the server will find the buzz word "Social-Mobile" and change it's `heard` property to `true`. It should then update the total score kept on the server and return that value as part of the response object.
 
 `DELETE /buzzword`: Deletes a buzz word from the collection.
 
 ## Score?
-For now, your server only handles one user's game and one user's score total. It's up to you on how you keep track of the user's score.
+For now, it's up to you on how you keep track of the user's score.
 
 ## Middleware to use
 [Body-Parser](https://github.com/expressjs/body-parser) - Use this module to help parse the `data` coming from a request. Focus on the **[urlencodedoptions](https://github.com/expressjs/body-parser#bodyparserurlencodedoptions)** section of the README, use the `extended: true` option. Take some time to scan through the documentation. What is `body-parser` module doing for us? Is this module doing something we previously had to do manually?
