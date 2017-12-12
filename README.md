@@ -12,10 +12,10 @@ to handle all the connections, we need you to create the server using **ExpressJ
 - you will not implement a database.
 
 ## The Specs
-We like RESTful architechure. We like CRUD. As always, data will be sent to the server as `x-www-form-urlencoded`.
+We like RESTful architecture. We like CRUD. As always, data will be sent to the server as `x-www-form-urlencoded`.
 
 ### Creating Buzzwords
-This is how your buzzword objects should look like after receiving a `POST` to the uri `/buzzword`
+This is how your buzzword objects should look like after receiving a `POST` to the URI `/buzzword`
 
 ```javascript
 {
@@ -29,13 +29,13 @@ You will store these objects in memory for the time being. Meaning that if the *
 
 **Routes overview table:**
 
-| **METHOD** **ROUTE (uri)** | **BODY** | **RESPONSE** | **Action** |
+| **METHOD** **ROUTE (URI)** | **BODY** | **RESPONSE** | **Action** |
 |---|---|---|---|
 | `GET /` | empty | render HTML `index.html` | serves the `index.html` |
 | `GET /buzzwords` | empty | `{ "buzzWords": [...] }` A JSON response containing an array of current buzz words | Retrieves all buzzwords |
-| `POST /buzzword` | `{ "buzzWord": String, "points": Number }` | `{ "success": true }` | Creates a new buzzword object. Returns `true` if successful else `false`|
-| `PUT /buzzword` | `{ "buzzWord": String, "heard": Bool }` |  `{ "success": true, newScore: Number }` | Updates a buzzword's heard value. This also marks that a buzzword has been heard and should update the total score. Returns `true` and the new total score if successful otherwise returns just `false` |
-| `DELETE /buzzword` | `{ "buzzWord": String }` | `{ "success": true }` | Delete a buzzword. Returns `true` if successful else `false` |
+| `POST /buzzwords` | `{ "buzzWord": String, "points": Number }` | `{ "success": true }` | Creates a new buzzword object. Returns `true` if successful else `false`|
+| `PUT /buzzwords` | `{ "buzzWord": String, "heard": Bool }` |  `{ "success": true, newScore: Number }` | Updates a buzzword's heard value. This also marks that a buzzword has been heard and should update the total score. Returns `true` and the new total score if successful otherwise returns just `false` |
+| `DELETE /buzzwords` | `{ "buzzWord": String }` | `{ "success": true }` | Delete a buzzword. Returns `true` if successful else `false` |
 | `POST /reset` | `{ "reset": true }` | `{ "success": true }` | Resets the server. All buzzwords are removed and total scores reset to `0` |
 
 ## Routes detailed
@@ -43,19 +43,19 @@ You will store these objects in memory for the time being. Meaning that if the *
 
 `GET /buzzwords`: Returns a JSON response containing single key, `buzzWords` which will be an array containing objects (see [Buzz Word Object Section](https://gist.github.com/sgnl/378bd9b54c566f0f22ef#buzz-word-object) for details)
 
-`POST /buzzword`: Creates a new buzz word object. The body **should** have these keys:
+`POST /buzzwords`: Creates a new buzz word object. The body **should** have these keys:
   - `buzzWord` which contains the buzz word as a `String` and
   - `points` property is how many points that word is worth when scored, this value is of data-type `Number`.
   Example:
   if `{ "buzzword": "Agile is amazing", "score": 1000 }` is sent to this route then the server will create a new [buzz word object](https://github.com/expressjs/body-parser#bodyparserurlencodedoptions) and add it to a collection.
 
-`PUT /buzzword`:  Updates a buzz word's `heard` property. This also marks that the buzzword has been "heard" in the conversation. Therefore, the total score should be incremented with the score value attached to the heard buzzword. The body **should** contain these keys:
+`PUT /buzzwords`:  Updates a buzz word's `heard` property. This also marks that the buzzword has been "heard" in the conversation. Therefore, the total score should be incremented with the score value attached to the heard buzzword. The body **should** contain these keys:
   - `buzzWord` which is the buzz word to modify.
   - `heard` Changes the value stored.
   Example:
   if `{ "buzzWord": "Social-Mobile", "heard": true }` is sent to this route then the server will find the buzz word "Social-Mobile" and change it's `heard` property to `true`. It should then update the total score kept on the server and return that value as part of the response object.
 
-`DELETE /buzzword`: Deletes a buzz word from the collection.
+`DELETE /buzzwords`: Deletes a buzz word from the collection.
 
 ## Score?
 For now, it's up to you on how you keep track of the user's score.
