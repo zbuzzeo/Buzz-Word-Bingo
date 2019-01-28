@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/zbuzzeo/Buzz-Word-Bingo#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "npm": "^6.7.0"
   }
 }

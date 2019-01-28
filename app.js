@@ -1,10 +1,9 @@
 'use strict';
 
-const express = require('express');
 const routing = require('./routes/routing');
 const buzzwords = require('./routes/buzz-words');
+const express = require('express');
 const app = express();
-
 
 app.use('/', routing);
 app.use('/buzzwords', buzzwords);
