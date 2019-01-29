@@ -1,6 +1,6 @@
 'use strict';
 
-const saveBuzzWords = require('../save-buzz-words');
+let saveBuzzWords = require('../save-buzz-words');
 const express = require('express');
 const router = express.Router();
 const buzzRouter = require('./buzz-words');
@@ -19,7 +19,18 @@ router.get('/about', (req, res) => {
 
 // stop tracking all buzzwords
 router.post('/reset', urlEncoded, (req, res) => {
-  
+  let success = false;
+  let message = 'Reset must be set to true!';
+
+  if (req.body.reset === 'true') {
+    success = true;
+    message = 'All buzzwords are no longer being tracked.';
+
+    saveBuzzWords.splice(0, saveBuzzWords.length);
+  }
+
+  res.send({ "message": message, "success": success });
+  return success;
 });
 
 module.exports = router;

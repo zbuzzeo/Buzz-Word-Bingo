@@ -1,6 +1,6 @@
 'use strict';
 
-const buzzes = [];
+let buzzes = [];
 
 module.exports = buzzes;
 
