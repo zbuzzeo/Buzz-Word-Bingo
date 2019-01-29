@@ -4,7 +4,7 @@ const saveBuzzWords = require('../save-buzz-words');
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const urlEncoded = bodyParser.urlencoded({ extended: false});
+const urlEncoded = bodyParser.urlencoded({ extended: false });
 
 // get the buzzwords from POST requests, store them as their own objects.
 // have an array of objects (buzzwords) that you can send when the client requests with GET.
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 
 // POST request helper:
 // validates that an object with the same buzzword does not already exist in the array.
-const foundMatch = (checkObj) => {
+router.foundMatch = (checkObj) => {
   if (typeof checkObj !== 'object') {
     throw new Error('checkObj expected an object');
   }
@@ -39,7 +39,7 @@ router.post('/', urlEncoded, (req, res) => {
     res.send({ "Error": "Too many buzzwords!" });
   }
 
-  let success = !foundMatch(req.body);
+  let success = !router.foundMatch(req.body);
   let message = `That resource already exists!`;
 
   // if an object hasn't been created yet...
@@ -53,7 +53,7 @@ router.post('/', urlEncoded, (req, res) => {
 });
 
 router.put('/', urlEncoded, (req, res) => {
-  let success = foundMatch(req.body);
+  let success = router.foundMatch(req.body);
   let message = 'Error: Attempt to update buzzword that isn\'t being tracked.';
 
   // if an object already exists...
@@ -71,7 +71,7 @@ router.put('/', urlEncoded, (req, res) => {
 });
 
 router.delete('/', urlEncoded, (req, res) => {
-  let success = foundMatch(req.body);
+  let success = router.foundMatch(req.body);
   let message = 'Error: Attempt to remove a buzzword that isn\'t being tracked.';
 
   // if an object already exists...
