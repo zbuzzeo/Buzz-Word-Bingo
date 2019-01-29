@@ -39,12 +39,11 @@ router.post('/', urlEncoded, (req, res) => {
     res.send({ "Error": "Too many buzzwords!" });
   }
 
-  let success = false;
+  let success = !foundMatch(req.body);
   let message = `That resource already exists!`;
 
   // if an object hasn't been created yet...
-  if (!foundMatch(req.body)) {
-    success = true;
+  if (success) {
     message = `New buzzword '${req.body['buzzWord']}' is being tracked.`;
     saveBuzzWords.push(req.body);
   }
@@ -54,13 +53,11 @@ router.post('/', urlEncoded, (req, res) => {
 });
 
 router.put('/', urlEncoded, (req, res) => {
-  let success = false;
+  let success = foundMatch(req.body);
   let message = 'Error: Attempt to update buzzword that isn\'t being tracked.';
 
   // if an object already exists...
-  if (foundMatch(req.body)) {
-    success = true;
-
+  if (success) {
     saveBuzzWords.map(buzz => {
       if (buzz['buzzWord'] === req.body['buzzWord']) {
         buzz['points']++;
@@ -74,13 +71,11 @@ router.put('/', urlEncoded, (req, res) => {
 });
 
 router.delete('/', urlEncoded, (req, res) => {
-  let success = false;
-  let message = 'Error: Attempt to delete a buzzword that isn\'t being tracked.';
+  let success = foundMatch(req.body);
+  let message = 'Error: Attempt to remove a buzzword that isn\'t being tracked.';
 
   // if an object already exists...
-  if (foundMatch(req.body)) {
-    success = true;
-
+  if (success) {
     saveBuzzWords.forEach(buzz => {
       if (buzz['buzzWord'] === req.body['buzzWord']) {
         saveBuzzWords.splice(saveBuzzWords.indexOf(buzz), 1);
