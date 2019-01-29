@@ -26,32 +26,70 @@ const foundMatch = (checkObj) => {
   let detected = false;
 
   saveBuzzWords.forEach(buzz => {
-    if (buzz['buzzWord'] === checkObj['buzzWord']) { detected = true; }
+    if (buzz['buzzWord'] === checkObj['buzzWord']) { 
+      detected = true; 
+    }
   });
 
   return detected;
 }
 
 router.post('/', urlEncoded, (req, res) => {
+  if (saveBuzzWords.Length > 4) {
+    res.send({ "Error": "Too many buzzwords!" });
+  }
+
   let success = false;
+  let message = `That resource already exists!`;
 
   // if an object hasn't been created yet...
   if (!foundMatch(req.body)) {
     success = true;
+    message = `New buzzword '${req.body['buzzWord']}' is being tracked.`;
     saveBuzzWords.push(req.body);
   }
 
-  res.send({ "success": success });
+  res.send({ "message": message, "success": success });
   return success;
 });
 
 router.put('/', urlEncoded, (req, res) => {
-  let alreadyExists = false;
   let success = false;
+  let message = 'Error: Attempt to update buzzword that isn\'t being tracked.';
 
-  
+  // if an object already exists...
+  if (foundMatch(req.body)) {
+    success = true;
 
-  res.send({ "success": success });
+    saveBuzzWords.map(buzz => {
+      if (buzz['buzzWord'] === req.body['buzzWord']) {
+        buzz['points']++;
+        message = `Points added to buzzWord '${buzz['buzzWord']}.'`;
+      }
+    });
+  }
+
+  res.send({ "message": message, "success": success });
+  return success;
+});
+
+router.delete('/', urlEncoded, (req, res) => {
+  let success = false;
+  let message = 'Error: Attempt to delete a buzzword that isn\'t being tracked.';
+
+  // if an object already exists...
+  if (foundMatch(req.body)) {
+    success = true;
+
+    saveBuzzWords.forEach(buzz => {
+      if (buzz['buzzWord'] === req.body['buzzWord']) {
+        saveBuzzWords.splice(saveBuzzWords.indexOf(buzz), 1);
+        message = `No longer tracking buzzword ${buzz['buzzWord']}.`;
+      }
+    });
+  }
+
+  res.send({ "message": message, "success": success });
   return success;
 });
 
